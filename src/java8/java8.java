@@ -1,5 +1,5 @@
 package java8;
-
+// novos defaults methods do java 8: https://docs.oracle.com/javase/8/docs/api/java/util/List.html
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -40,8 +40,7 @@ public class java8 {
 		//consumidor para ser usado no forEach
 		Consumer<String> consumidor = new ImprimeNaLinha();
 		//forEach: precisa de um consumidor
-//		palavras.forEach(consumidor);
-		palavras.forEach(null);
+		palavras.forEach(consumidor);
 		
 		/*
 		 * Sobre o Default Method
