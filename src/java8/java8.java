@@ -1,9 +1,11 @@
 package java8;
+
 // novos defaults methods do java 8: https://docs.oracle.com/javase/8/docs/api/java/util/List.html
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+
 /*
  * A proposta dessa classe √© treinar e comparar as diferen√ßas entre o java 8 e as vers√µes anteriores.
  */
@@ -11,69 +13,115 @@ public class java8 {
 
 	public static void main(String[] args) {
 
-		List<String> palavras = Arrays.asList("Development","Title","Hi");
-		
-		//Comparator: √© utilizado para definir uma nova forma de ordenar uma lista
-		Comparator<String> comparador = new ConparadorPorTamanho();
-		
+		List<String> palavras = Arrays.asList("Development", "Title", "Hi");
+
 		/*
-		 * por default o m√©todo sort ordena por ordem alfabetica
-		 * obs: forma anterior ao java 8 de ordenar
+		 * Ilustrando a transiÁ„o atÈ o usa do LAMBDA no sort
 		 */
-		//Collections.sort(palavras);
-		
-		
+		// Comparator: √© utilizado para definir uma nova forma de ordenar uma lista
+//		Comparator<String> comparador = new ConparadorPorTamanho();
+
+		/*
+		 * por default o m√©todo sort ordena por ordem alfabetica obs: forma anterior ao
+		 * java 8 de ordenar
+		 */
+		// Collections.sort(palavras);
+		/*
+		 * com o meu comparator, √© ordenado por tamanho (length) da string obs: forma
+		 * anterior ao java 8 de ordenar
+		 */
+		// Collections.sort(palavras, comparador);
+
 		palavras.sort(null);// forma de ordenar do java 8. Comparator default (alfabetico)
-		
-//		System.out.println(palavras);
-		
+
+//		palavras.sort(comparador); //1∫ implementaÁ„o do comparator: usando classe. Forma de ordenar do java 8. Meu Comparator
+
+//		palavras.sort(new Comparator<String>() { //2∫ implementaÁ„o do comparator: usando classe anonima
+//			@Override
+//			public int compare(String s1, String s2) {
+//				if (s1.length() < s2.length())
+//					return -1;
+//				if (s1.length() > s2.length())
+//					return 1;
+//				// se as strings forem do mesmo tamanho
+//				return 0;
+//			}
+//		});
+
 		/*
-		 * com o meu comparator, √© ordenado por tamanho (length) da string
-		 * obs: forma anterior ao java 8 de ordenar
+		 * Usando o LAMBDA
 		 */
-		//Collections.sort(palavras, comparador);
+		palavras.sort((String s1, String s2) -> Integer.compare(s1.length(), s2.length()));
 		
-		palavras.sort(comparador); // forma de ordenar do java 8. Meu Comparator
-		
-//		System.out.println(palavras);
-		
-		//consumidor para ser usado no forEach
-		Consumer<String> consumidor = new ImprimeNaLinha();
-		//forEach: precisa de um consumidor
-		palavras.forEach(consumidor);
+		//mostrando outra forma de usar o lambda apresentado acima
+		Comparator<String> comparadorUsandoLambda = (s1, s2) -> Integer.compare(s1.length(), s2.length());
+		palavras.sort(comparadorUsandoLambda);
+
+		/*
+		 * Ilustrando a transiÁ„o atÈ o usa do LAMBDA no forEach
+		 */
+		// consumidor para ser usado no forEach
+//		Consumer<String> consumidor = new ImprimeNaLinha(); //1∫ implementaÁ„o consumidor: usando classe q implementa consumer
+
+		// usando classe anonima
+//		Consumer<String> consumidor = new Consumer<String>() { //2∫ implementaÁ„o consumidor: usando classe anonima na interface consumer
+//			@Override
+//			public void accept(String s) {
+//				System.out.println(s);
+//			}
+//		};
+
+		// forEach: precisa de um consumidor
+//		palavras.forEach(consumidor);
+
+//		palavras.forEach(new Consumer<String>() { // 3∫ implementaÁ„o consumidor: passando a classe anonima direto
+//			@Override
+//			public void accept(String s) {
+//				System.out.println(s);
+//			}
+//		});
+
+		/*
+		 * Usando Lambda
+		 */
+		palavras.forEach(s -> System.out.println(s));
+
+		//mostrando outra forma de usar o lambda apresentado acima
+		Consumer<String> consumidorUsandoLambda = s -> System.out.println(s);
+		palavras.forEach(consumidorUsandoLambda);
 		
 		/*
-		 * Sobre o Default Method
-		 * Exemplo: m√©todo sort do List.
-		 * Ex.: default void sort (Comparator<? super E> c) { Collections.sort(this, c) }
-		 * √â um m√©todo que possui corpo dentre de uma interface, ou seja n√£o √© um m√©todo abstrato
+		 * Sobre o Default Method Exemplo: m√©todo sort do List. Ex.: default void sort
+		 * (Comparator<? super E> c) { Collections.sort(this, c) } √â um m√©todo que
+		 * possui corpo dentre de uma interface, ou seja n√£o √© um m√©todo abstrato
 		 */
 	}
 }
 
-class ImprimeNaLinha implements Consumer<String> {
-
-	@Override
-	public void accept(String s) {
-		System.out.println(s);
-	}
-	
-}
-
+//neste caso se usa classe anonima
+//class ImprimeNaLinha implements Consumer <String> {
+//
+//	@Override
+//	public void accept(String s) {
+//		System.out.println(s);
+//	}
+//	
+//}
 
 /*
- * √© a implementa√ß√£o do das resgras do meu comparator, ou seja da minha forma de ordenar
+ * √© a implementa√ß√£o do das resgras do meu comparator, ou seja da minha forma
+ * de ordenar
  */
-class ConparadorPorTamanho implements Comparator<String> {
-
-	@Override
-	public int compare(String s1, String s2) {
-		if(s1.length() < s2.length())
-			return -1;
-		if(s1.length() > s2.length())
-			return 1;
-		//se as strings forem do mesmo tamanho
-		return 0;
-	}
-	
-}
+//class ConparadorPorTamanho implements Comparator<String> {
+//
+//	@Override
+//	public int compare(String s1, String s2) {
+//		if (s1.length() < s2.length())
+//			return -1;
+//		if (s1.length() > s2.length())
+//			return 1;
+//		// se as strings forem do mesmo tamanho
+//		return 0;
+//	}
+//
+//}
