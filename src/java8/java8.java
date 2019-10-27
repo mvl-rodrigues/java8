@@ -95,6 +95,12 @@ public class java8 {
 		 * (Comparator<? super E> c) { Collections.sort(this, c) } É um método que
 		 * possui corpo dentre de uma interface, ou seja não é um método abstrato
 		 */
+		
+		new Thread(() -> System.out.println("Executando um Runnable")).start();
+		/*
+		 * Quando a express�o lambda n�o estiver passando parametros devemos usar parenteses vazios: ()
+		 * como  neste exemplo: () -> System.out.println("Executando um Runnable")
+		 */
 	}
 }
 
