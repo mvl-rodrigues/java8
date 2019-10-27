@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /*
  * A proposta dessa classe Ã© treinar e comparar as diferenÃ§as entre o java 8 e as versÃµes anteriores.
@@ -51,7 +52,14 @@ public class java8 {
 		/*
 		 * Usando o LAMBDA
 		 */
-		palavras.sort((String s1, String s2) -> Integer.compare(s1.length(), s2.length()));
+		palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+		//quebranco o código acima para visualizar melhor o que esta acontecendo
+		
+		Function<String, Integer> funcao = s -> s.length(); //1º interface funcional que define o critério de comparação
+		Comparator<String> comparador = Comparator.comparing(funcao);//2º usamos o coparing que é uma factory de comparator 
+		//e que recebe uma instancia de uma interface funcional (lambda) que define o critério de compação.
+		palavras.sort(comparador);//3º passamos para o método default sort o nosse critério de ordenação
+		
 		
 		//mostrando outra forma de usar o lambda apresentado acima
 		Comparator<String> comparadorUsandoLambda = (s1, s2) -> Integer.compare(s1.length(), s2.length());
