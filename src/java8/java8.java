@@ -55,11 +55,25 @@ public class java8 {
 		palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
 		//quebranco o código acima para visualizar melhor o que esta acontecendo
 		
-		Function<String, Integer> funcao = s -> s.length(); //1º interface funcional que define o critério de comparação
-		Comparator<String> comparador = Comparator.comparing(funcao);//2º usamos o coparing que é uma factory de comparator 
+//		Function<String, Integer> funcao = s -> s.length(); //1º interface funcional que define o critério de comparação
+//		Comparator<String> comparador = Comparator.comparing(funcao);//2º usamos o coparing que é uma factory de comparator 
 		//e que recebe uma instancia de uma interface funcional (lambda) que define o critério de compação.
-		palavras.sort(comparador);//3º passamos para o método default sort o nosse critério de ordenação
+//		palavras.sort(comparador);//3º passamos para o método default sort o nosse critério de ordenação
 		
+		/*
+		 * Method Reference :: é uma forma ainda mais simples de escrever o lambda, fazendo apenas uma referencia ao método
+		 * Aplicando o Method Reference no palavras.sort(Comparator.comparing(s -> s.length()));
+		 */
+		palavras.sort(Comparator.comparing(String::length));
+		
+		palavras.forEach(s -> System.out.println(s)); //lambda
+		palavras.forEach(System.out::println); //method reference
+		
+		Function<String, Integer> funcaoUsandoLambda = s -> s.length(); //lambda
+		Function<String, Integer> funcaoUsandoReference = String::length; //method reference
+		
+//		exemplo de lambda que nao poder ser representado com method reference: s -> s.substring(0, 5); pois não é uma simples invocação de método
+//		onde os parametros são os mesmos do lambda
 		
 		//mostrando outra forma de usar o lambda apresentado acima
 		Comparator<String> comparadorUsandoLambda = (s1, s2) -> Integer.compare(s1.length(), s2.length());
