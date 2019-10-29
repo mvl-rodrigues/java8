@@ -3,14 +3,15 @@ package java8.stream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ExemploCursos {
 
 	public static void main(String[] args) {
-		List<Curso> cursos = Arrays.asList(new Curso("JavaScript", 150), new Curso("Java 8", 113),
-				new Curso("Python", 45), new Curso("C", 55));
+		List<Curso> cursos = Arrays.asList(new Curso("JavaScript", 150), new Curso("Java 8", 50),
+				new Curso("Python", 80), new Curso("C", 170));
 		
 		/*
 		 * learning abaut stream api
@@ -58,19 +59,27 @@ public class ExemploCursos {
 //			.filter(c -> c.getAlunos() >= 100)
 //			.collect(Collectors.toList()); // transforma a stream filtrada e converte para uma List<Cursos>
 		
-		cursos.stream()
-			.filter(c -> c.getAlunos() >= 100)
-			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))// convertendo para map, tendo getNome como chave e getAlunos como valor.
-			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
+//		cursos.stream()
+//			.filter(c -> c.getAlunos() >= 100)
+//			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))// convertendo para map, tendo getNome como chave e getAlunos como valor.
+//			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
 		
 		/*
 		 * Obs: o stream permite usar streams paralelas para trabalhar com grandes valumes de dados
 		 * ex:
 		 */
-		cursos.parallelStream() // melhora a performace quando temos que trabalhar com grandes coleções de dados
-			.filter(c -> c.getAlunos() >= 100)
-			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))
-			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
+//		cursos.parallelStream() // melhora a performace quando temos que trabalhar com grandes coleções de dados
+//			.filter(c -> c.getAlunos() >= 100)
+//			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))
+//			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
+		
+//		OptionalDouble average = cursos.stream().mapToInt(Curso::getAlunos).average();
+//		System.out.println(average);
+		
+		cursos.stream()
+			.filter(c -> c.getAlunos() >= 99)
+			.collect(Collectors.toList())
+			.forEach(c -> System.out.println(c.getNome()));
 		
 	}
 
