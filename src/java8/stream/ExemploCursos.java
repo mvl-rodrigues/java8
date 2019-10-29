@@ -61,7 +61,17 @@ public class ExemploCursos {
 		cursos.stream()
 			.filter(c -> c.getAlunos() >= 100)
 			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))// convertendo para map, tendo getNome como chave e getAlunos como valor.
-			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos.")); 		
+			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
+		
+		/*
+		 * Obs: o stream permite usar streams paralelas para trabalhar com grandes valumes de dados
+		 * ex:
+		 */
+		cursos.parallelStream() // melhora a performace quando temos que trabalhar com grandes coleções de dados
+			.filter(c -> c.getAlunos() >= 100)
+			.collect(Collectors.toMap(Curso::getNome,Curso::getAlunos))
+			.forEach((nome, valor) -> System.out.println(nome + " tem " + valor + " Alunos."));
+		
 	}
 
 }
